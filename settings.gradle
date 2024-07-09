@@ -1,2 +1,4 @@
 rootProject.name = 'couponProject'
+include 'coupon-api'
+include 'coupon-core'
 
