@@ -7,12 +7,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Import(CouponCoreConfiguration.class)
-@EnableJpaAuditing
 @SpringBootApplication
 //@SpringBootApplication(scanBasePackages = "com")
 public class CouponApiApplication {
     public static void main(String[] args) {
-        System.setProperty("spring.config.name", "application-domain,application-api");
+        System.setProperty("spring.config.name", "application-core,application-api");
         SpringApplication.run(CouponApiApplication.class, args);
     }
 }
