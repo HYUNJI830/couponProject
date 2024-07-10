@@ -24,28 +24,28 @@ public class Coupon extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String title;//쿠폰명
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private CouponType couponType;
+    private CouponType couponType; //쿠폰 타입
 
-    private Integer totalQuantity;
+    private Integer totalQuantity; //쿠폰 발급 최대 수량
 
     @Column(nullable = false)
-    private int issuedQuantity;
+    private int issuedQuantity; //발급된 쿠폰 수량
 
     @Column(nullable = false)
     private int discountAmount;
 
     @Column(nullable = false)
-    private int minAvailableAmount;
+    private int minAvailableAmount; //최소 수량
 
     @Column(nullable = false)
-    private LocalDateTime dateIssueStart;
+    private LocalDateTime dateIssueStart;//발급 시작 일시
 
     @Column(nullable = false)
-    private LocalDateTime dateIssueEnd;
+    private LocalDateTime dateIssueEnd; //발급 종료 일시
 
     public boolean availableIssueQuantity(){
         if(totalQuantity == null){

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static com.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_DATE;
 import static com.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_QUANTITY;
-import static org.junit.jupiter.api.Assertions.*;
+
 
 class CouponTest {
     @Test

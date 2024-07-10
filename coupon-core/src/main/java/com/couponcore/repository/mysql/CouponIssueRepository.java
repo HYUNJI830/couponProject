@@ -17,6 +17,6 @@ public class CouponIssueRepository {
         return queryFactory.selectFrom(couponIssue)
                 .where(couponIssue.couponId.eq(couponId))
                 .where(couponIssue.userId.eq(userId))
-                .fetchFirst();
+                .fetchFirst(); // 첫번째 결과를 가져옴
     }
 }
