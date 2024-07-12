@@ -1,5 +1,7 @@
 package com.couponcore.service;
 
+import com.couponcore.dto.CouponResponseDto;
+import com.couponcore.dto.CouponServiceDto;
 import com.couponcore.exception.CouponIssueException;
 import com.couponcore.model.Coupon;
 import com.couponcore.model.CouponIssue;
@@ -23,6 +25,7 @@ public class CouponIssueService {
     private final CouponIssueRepository couponIssueRepository;
     private final ApplicationEventPublisher applicationEventPublisher;
 
+
     @Transactional
     public void issue(long couponId, long userId){
         Coupon coupon = findCoupon(couponId);
@@ -38,12 +41,12 @@ public class CouponIssueService {
         });
     }
 
-    @Transactional
-    public Coupon findCouponWithLock(long couponId){
-        return couponJpaRepository.findCouponWithLock(couponId).orElseThrow(()->{
-            throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰이 존재하지 않습니다. %s".formatted(couponId));
-        });
-    }
+//    @Transactional
+//    public Coupon findCouponWithLock(long couponId){
+//        return couponJpaRepository.findCouponWithLock(couponId).orElseThrow(()->{
+//            throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰이 존재하지 않습니다. %s".formatted(couponId));
+//        });
+//    }
 
     @Transactional
     public CouponIssue saveCouponIssue(long couponId, long userId){

@@ -5,13 +5,12 @@ import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
-
 import java.util.Optional;
 
 public interface CouponJpaRepository extends JpaRepository<Coupon, Long> {
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select  c from Coupon c where c.id =:id")
-    Optional<Coupon> findCouponWithLock(Long id); //널예외 방지 처리
+    //@Lock(LockModeType.PESSIMISTIC_WRITE)
+    //@Query("select  c from Coupon c where c.id =:id")
+    //Optional<Coupon> findCouponWithLock(Long id); //널예외 방지 처리
 }
 
 //@Lock : JPA 제공하는 잠금 메커니즘 지정
