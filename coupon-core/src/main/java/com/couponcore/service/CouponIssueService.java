@@ -5,7 +5,7 @@ import com.couponcore.dto.CouponServiceDto;
 import com.couponcore.exception.CouponIssueException;
 import com.couponcore.model.Coupon;
 import com.couponcore.model.CouponIssue;
-import com.couponcore.model.event.CouponIssueCompleteEvent;
+
 import com.couponcore.repository.mysql.CouponIssueJpaRepository;
 import com.couponcore.repository.mysql.CouponIssueRepository;
 import com.couponcore.repository.mysql.CouponJpaRepository;
@@ -33,6 +33,8 @@ public class CouponIssueService {
         saveCouponIssue(couponId, userId);
         //publishCouponEvent(coupon);
     }
+    // 트랜잭션 시작 > lock 획득>issue() > lock 반납>1번 요청 >트랜잭션 커밋 : 트랜잭션 커밋 전에 요청이 남으면 2번 요청시 요청이 안된걸로 봐서 예상보다 많은 요청이 발생함
+    // > lock 획득 > 트랜잭션 시작 >issue() >1번 요청 >트랜잭션 커밋> lock 반납 : 트랜잭션 내부에 롹을 열면 안된다.
 
     @Transactional(readOnly = true)
     public Coupon findCoupon(long couponId){
@@ -60,10 +62,6 @@ public class CouponIssueService {
                 .build();
         return couponIssueJpaRepository.save(couponIssue);
     }
-    private void publishCouponEvent(Coupon coupon) {
-        if (coupon.isIssueComplete()) {
-            applicationEventPublisher.publishEvent(new CouponIssueCompleteEvent(coupon.getId()));
-        }
-    }
+
 
 }

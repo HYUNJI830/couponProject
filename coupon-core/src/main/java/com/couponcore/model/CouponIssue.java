@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 //@CreatedDate 쓰기 위해서는 application 실행 부분에 @EnableJpaAuditing 어노테이션으로 Auditing 기능 활성화
 //엔티티에는 @EntityListeners(AuditingEntityListener.class) 활성화 해야 작동된다.
 @Table(name = "coupon_issues")
-public class CouponIssue  {
+public class CouponIssue extends BaseTimeEntity   {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,4 +36,5 @@ public class CouponIssue  {
     private LocalDateTime dateIssued;
 
     private LocalDateTime dateUsed;
+
 }
