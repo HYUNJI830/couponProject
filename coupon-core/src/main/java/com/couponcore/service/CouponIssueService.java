@@ -28,7 +28,7 @@ public class CouponIssueService {
 
     @Transactional
     public void issue(long couponId, long userId){
-        Coupon coupon = findCoupon(couponId);
+        Coupon coupon = findCouponWithLock(couponId);
         coupon.issue();
         saveCouponIssue(couponId, userId);
         //publishCouponEvent(coupon);
@@ -43,12 +43,12 @@ public class CouponIssueService {
         });
     }
 
-//    @Transactional
-//    public Coupon findCouponWithLock(long couponId){
-//        return couponJpaRepository.findCouponWithLock(couponId).orElseThrow(()->{
-//            throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰이 존재하지 않습니다. %s".formatted(couponId));
-//        });
-//    }
+    @Transactional
+    public Coupon findCouponWithLock(long couponId){
+        return couponJpaRepository.findCouponWithLock(couponId).orElseThrow(()->{
+            throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰이 존재하지 않습니다. %s".formatted(couponId));
+        });
+    }
 
     @Transactional
     public CouponIssue saveCouponIssue(long couponId, long userId){
