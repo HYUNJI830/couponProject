@@ -15,6 +15,6 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok"
 }
 
-bootJar {
-    enabled = false
-}
+bootJar { enabled = false }
+
+jar { enabled = true }

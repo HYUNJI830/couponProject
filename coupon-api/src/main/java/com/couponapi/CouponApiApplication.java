@@ -10,8 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Import(CouponCoreConfiguration.class)
 @SpringBootApplication
-//@SpringBootApplication(scanBasePackages ="com.couponcore")
-//@EnableJpaRepositories(basePackages = "com.couponcore")
 public class CouponApiApplication {
     public static void main(String[] args) {
         System.setProperty("spring.config.name", "application-core,application-api");

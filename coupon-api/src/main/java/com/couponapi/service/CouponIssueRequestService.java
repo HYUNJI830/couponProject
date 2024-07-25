@@ -4,6 +4,7 @@ import com.couponapi.controller.dto.CouponIssueRequestDto;
 import com.couponapi.controller.dto.CouponRequestDto;
 import com.couponcore.component.DistributeLockExecutor;
 import com.couponcore.service.AsyncCouponIssueService;
+import com.couponcore.service.AsyncCouponIssueServiceRedis;
 import com.couponcore.service.CouponIssueService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ public class CouponIssueRequestService {
     private final CouponIssueService couponIssueService;
     private final DistributeLockExecutor distributeLockExecutor;
     private final AsyncCouponIssueService asyncCouponIssueService;
+    private final AsyncCouponIssueServiceRedis asyncCouponIssueServiceRedis;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -34,6 +36,10 @@ public class CouponIssueRequestService {
 //    }
     public void asyncIssueRequest(CouponIssueRequestDto requestDto){
         asyncCouponIssueService.issue(requestDto.couponId(),requestDto.userId());
+    }
+
+    public void asyncIssueRequestRedis(CouponIssueRequestDto requestDto){
+        asyncCouponIssueServiceRedis.issue(requestDto.couponId(),requestDto.userId());
     }
 
 

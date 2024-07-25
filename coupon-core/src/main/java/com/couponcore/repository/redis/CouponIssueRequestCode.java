@@ -5,8 +5,8 @@ import com.couponcore.exception.ErrorCode;
 
 public enum CouponIssueRequestCode {
     SUCCESS(1),
-    DUPLICATED_COUPON_ISSUE(2),
-    INVALID_COUPON_ISSUE_QUANTITY(3);
+    DUPLICATED_COUPON_ISSUE(2), //중복 쿠폰
+    INVALID_COUPON_ISSUE_QUANTITY(3); //쿠폰 발행 수량
 
 
     CouponIssueRequestCode(int code) {

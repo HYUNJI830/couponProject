@@ -24,6 +24,8 @@ public class CouponCacheService {
         return getCouponCache(couponId);
     }
 
+    //내부에서 aop를 사용하기 때문에, proxy()사용
+    //configuration에 설정 @EnableAspectJAutoProxy(exposeProxy = true)
 
     @Cacheable(cacheNames = "coupon", cacheManager = "localCacheManger")
     public CouponRedisEntity getCouponLocalCache(long couponId){

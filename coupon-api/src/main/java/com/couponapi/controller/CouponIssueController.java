@@ -5,12 +5,11 @@ import com.couponapi.controller.dto.CouponIssueResponseDto;
 import com.couponapi.controller.dto.CouponRequestDto;
 import com.couponapi.service.CouponIssueRequestService;
 import com.couponcore.dto.CouponResponseDto;
-import com.couponcore.model.Coupon;
-import com.couponcore.service.CouponIssueService;
+
 import com.couponcore.service.CouponService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +57,12 @@ public class CouponIssueController {
     @PostMapping("/issue-async")
     public CouponIssueResponseDto issueAsync(@RequestBody CouponIssueRequestDto requestDto){
         couponIssueRequestService.asyncIssueRequest(requestDto);
+        return new CouponIssueResponseDto(true, null);
+    }
+
+    @PostMapping("/issue-asyncRedis")
+    public CouponIssueResponseDto issueAsyncRedis(@RequestBody CouponIssueRequestDto requestDto){
+        couponIssueRequestService.asyncIssueRequestRedis(requestDto);
         return new CouponIssueResponseDto(true, null);
     }
 

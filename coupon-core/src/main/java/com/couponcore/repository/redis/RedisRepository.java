@@ -20,8 +20,8 @@ import static com.couponcore.utill.CouponRedisUtils.getIssueRequestQueueKey;
 public class RedisRepository {
 
     private final RedisTemplate<String, String> redisTemplate; //redis 상호작용을 위한 springDataRedis템플릿
-    private final RedisScript<String> issueScript = issueRequestScript(); //쿠폰 발행 요청 처리 Lua스크립트
-    private final String issueRequestQueueKey = getIssueRequestQueueKey(); //쿠폰 발행 요청 큐
+    private final RedisScript<String> issueScript = issueRequestScript(); //이슈 스크립트
+    private final String issueRequestQueueKey = getIssueRequestQueueKey(); //요청 큐의 키
     private final ObjectMapper objectMapper = new ObjectMapper(); //객체 Json 직렬화
 
     /**
@@ -77,6 +77,7 @@ public class RedisRepository {
         String issueRequestKey = getIssueRequestKey(couponId);
         CouponIssueRequest couponIssueRequest = new CouponIssueRequest(couponId, userId);
         try {
+            //스크립트에서 return 값 =code
             String code = redisTemplate.execute(
                     issueScript,
                     List.of(issueRequestKey, issueRequestQueueKey),
@@ -91,9 +92,10 @@ public class RedisRepository {
     }
 
     private RedisScript<String> issueRequestScript() {
-        //SISMEMBER로 사용자id가 이미 set에 있는지 확인 -> 있으면 2반환
-        //발생 수량이 set의 크기보다 크면, 사용자 id를 set에 추가 / 요청을 list 추가 ->1 반환
-        //그렇지 않으면 3 반환
+        //SISMEMBER : 중복 발급 요청 제어
+        //sAdd : 쿠폰 발급 요청 저장
+        //rPush : 쿠폰 발급 큐 적재 (키가 다른 이유는, 발급 요청과 큐를 구분하기 때문에)
+        //return 숫자로 한 이유 -> enum으로 관리하기 위해
         String script = """
                 if redis.call('SISMEMBER', KEYS[1], ARGV[1]) == 1 then
                     return '2'

@@ -7,3 +7,6 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
+bootJar { enabled = true }
+
+jar { enabled = true }
