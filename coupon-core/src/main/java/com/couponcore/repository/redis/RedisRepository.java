@@ -15,7 +15,7 @@ import static com.couponcore.exception.ErrorCode.FAIL_COUPON_ISSUE_REQUEST;
 import static com.couponcore.utill.CouponRedisUtils.getIssueRequestKey;
 import static com.couponcore.utill.CouponRedisUtils.getIssueRequestQueueKey;
 
-@RequiredArgsConstructor//필수필드를 초기화하는 생성자 자동생성
+@RequiredArgsConstructor
 @Repository
 public class RedisRepository {
 

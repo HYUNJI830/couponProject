@@ -26,32 +26,11 @@ public class AsyncCouponIssueService {
     private final RedisRepository redisRepository;
 
     private final CouponCacheService couponCacheService;
+
     private final DistributeLockExecutor distributeLockExecutor;
     private final CouponIssueRedisService couponIssueRedisService;
-    //private final CouponIssueService couponIssueService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-
-//    @Transactional
-//    public void issueEx(long couponId, long userId){
-//        //db(엔티티)에서  유효성 검증(쿠폰 존재, 유효 기간)
-//        Coupon coupon = couponIssueService.findCoupon(couponId);
-//        if(!coupon.availableIssueDate()){
-//            throw new CouponIssueException(INVALID_COUPON_ISSUE_DATE,"발급 가능한 기간이 아닙니다.");
-//        }
-//        distributeLockExecutor.execute("lock_%s".formatted(couponId), 3000, 3000,()-> {
-//            if (!couponIssueRedisService.availableTotalIssueQuantity(coupon.getTotalQuantity(), couponId)) {
-//                throw new CouponIssueException(ErrorCode.INVALID_COUPON_ISSUE_QUANTITY,
-//                        "가능한 수량을 초과 합니다. couponId : %s, userId : %s".formatted(couponId, userId));
-//            }
-//            if (!couponIssueRedisService.availableUserIssueQuantity(couponId, userId)) {
-//                throw new CouponIssueException(ErrorCode.DUPLICATED_COUPON_ISSUE,
-//                        "이미 발급 요청이 처리되었습니다. couponId : %s, userId : %s".formatted(couponId, userId));
-//            }
-//        });
-//        //쿠폰 발급 요청 추가
-//        issueRequest(couponId, userId);
-//    }
 
     @Transactional
     public void issue(long couponId, long userId){
@@ -67,7 +46,6 @@ public class AsyncCouponIssueService {
         });
     }
 
-    //레디스는 싱글 스레드이기때문에 -> 자동적으로 동시성 이슈가 해결됨
     /*
      1.totalQuantity > redisRepository.sCard(key); //쿠폰 발급 수량 제어
      2.!redisRepository.sIsMember(key, String.valueOf(userId)); //중복 발급 요청 제어

@@ -26,8 +26,8 @@ public record CouponRedisEntity(
 
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-        LocalDateTime dateIssueEnd
-) {
+        LocalDateTime dateIssueEnd)
+{
     public CouponRedisEntity(Coupon coupon){
         this(
                 coupon.getId(),

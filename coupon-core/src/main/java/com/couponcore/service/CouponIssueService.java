@@ -15,6 +15,10 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static com.couponcore.exception.ErrorCode.COUPON_NOT_EXIST;
 import static com.couponcore.exception.ErrorCode.DUPLICATED_COUPON_ISSUE;
 
@@ -26,6 +30,8 @@ public class CouponIssueService {
     private final CouponIssueJpaRepository couponIssueJpaRepository;
     private final CouponIssueRepository couponIssueRepository;
     private final ApplicationEventPublisher applicationEventPublisher;
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
 
     @Transactional
@@ -47,9 +53,16 @@ public class CouponIssueService {
 
     @Transactional
     public Coupon findCouponWithLock(long couponId){
-        return couponJpaRepository.findCouponWithLock(couponId).orElseThrow(()->{
-            throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰이 존재 하지 않습니다. %s".formatted(couponId));
+        Optional<Coupon> coupon = couponJpaRepository.findCouponWithLock(couponId);
+        if(coupon.isEmpty()){
+            log.info("쿠폰 왜 없어 {}", couponId);
+        }
+        return coupon.orElseThrow(()->{
+          throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰이 존재 하지 않습니다. %s".formatted(couponId));
         });
+//        return couponJpaRepository.findCouponWithLock(couponId).orElseThrow(()->{
+//            throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰이 존재 하지 않습니다. %s".formatted(couponId));
+//        });
     }
 
     @Transactional

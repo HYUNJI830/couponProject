@@ -1,7 +1,10 @@
-package com.couponconsumer.component;
+package com.couponconsumer.listener;
 
 
+import com.couponconsumer.component.CouponIssueListener;
+import com.couponconsumer.TestConfig;
 import com.couponcore.repository.redis.RedisRepository;
+import com.couponcore.service.AsyncCouponIssueServiceRedis;
 import com.couponcore.service.CouponIssueService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +18,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Collection;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -33,6 +35,8 @@ class CouponIssueListenerTest extends TestConfig {
 
     @Autowired
     CouponIssueService couponIssueService;
+    AsyncCouponIssueServiceRedis asyncCouponIssueServiceRedis;
+
     @BeforeEach
     void clean() {
         Collection<String> redisKeys = redisTemplate.keys("*");

@@ -14,7 +14,6 @@ import static com.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_QUANTITY;
 @AllArgsConstructor
 @Getter
 @Entity
-@Setter
 @Table(name = "coupons")
 public class Coupon extends BaseTimeEntity {
     @Id
@@ -57,6 +56,7 @@ public class Coupon extends BaseTimeEntity {
         return dateIssueStart.isBefore(now) && dateIssueEnd.isAfter(now);
     }
 
+    //발행 완료
     public boolean isIssueComplete(){
         LocalDateTime now = LocalDateTime.now();
         return dateIssueEnd.isBefore(now) || !availableIssueQuantity();

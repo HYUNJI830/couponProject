@@ -2,6 +2,8 @@ package com.couponconsumer.component;
 
 import com.couponcore.repository.redis.RedisRepository;
 import com.couponcore.repository.redis.dto.CouponIssueRequest;
+import com.couponcore.service.AsyncCouponIssueService;
+import com.couponcore.service.AsyncCouponIssueServiceRedis;
 import com.couponcore.service.CouponIssueService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

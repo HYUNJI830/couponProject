@@ -1,14 +1,17 @@
-package com.couponconsumer.component;
+package com.couponconsumer;
 
-import com.couponcore.CouponCoreConfiguration;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @ActiveProfiles("test")
 @TestPropertySource(properties = "spring.config.name=application-core")
-@SpringBootTest(classes = CouponCoreConfiguration.class)
-public class TestConfig {
+@SpringBootTest
+public class CouponConsumerApplicationTests {
+    @Test
+    void contextLoads() {
+    }
+
+
 }
