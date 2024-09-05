@@ -23,18 +23,20 @@ public class CouponIssueListener {
 
     private final RedisRepository redisRepository;
 
-    private final CouponIssueService couponIssueService;
+    private final CouponIssueService couponIssueService; //동기처리방식
+    private final AsyncCouponIssueService asyncCouponIssueService;//비동기처리방식
     private final ObjectMapper objectMapper = new ObjectMapper() ;
     private final String issueRequestQueueKey = getIssueRequestQueueKey();
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
-    @Scheduled(fixedDelay = 1000L)
+    @Scheduled(fixedDelay = 1000L) //1초간격으로 큐를 폴링
     public void issue() throws JsonProcessingException {
         log.info("Listen...");
         while(existCouponIssueTarget()){
             CouponIssueRequest target = getIssueTarget();
             log.info("발급 시작 target : %s".formatted(target));
-            couponIssueService.issue(target.couponId(),target.userId());
+            //couponIssueService.issue(target.couponId(),target.userId());
+            asyncCouponIssueService.issue(target.couponId(),target.userId());
             log.info("발급 완료 target : %s".formatted(target));
             removeIssueTarget();
         }
